@@ -7,7 +7,7 @@ let toDoItems = [];
 // agregar tu nombre al final del texto actual. Ej: 'Aplicación creada por Franco'
 // Tu código acá:
 let creador = document.querySelector('#createdBy');
-creador.innerHTML += "Juan Manuel Paola";
+creador.innerHTML += " " + "Juan M.Paola";
 
 
 // Crear una clase denominada 'ToDo' cuyo constructor debe recibir un único parámetro del tipo string
@@ -53,7 +53,7 @@ function buildToDo(todo, index) {
   // Tu código acá:
   let toDoShell = document.createElement('div');
 
-  toDoShell.classList.add('toDoShell');
+  toDoShell.setAttribute("class","toDoShell");
 
   let toDoText = document.createElement('span');
 
@@ -61,7 +61,9 @@ function buildToDo(todo, index) {
 
   toDoText.id = index;
 
-  if(todo.complete === true) toDoText.className('completeText')
+  toDoText.addEventListener("click", completeToDo)
+
+  if(todo.complete === true) toDoText.setAttribute("class","completeText")
 
   toDoShell.appendChild(toDoText);
 
@@ -92,14 +94,8 @@ function displayToDos() {
   // Tu código acá:
   let toDoContainer = document.getElementById('toDoContainer')
   toDoContainer.innerHTML = "";
-  const builtodos = buildToDos(toDoItems)
-  const toDoElements = builtodos.map ((builtodo)=>{
-    return builtodo
-  })
-  toDoElements.forEach(element => {
-    toDoContainer.append(element)
-  });
-
+  let builtodos = buildToDos(toDoItems)
+  builtodos.map ((element) => toDoContainer.append (element))
 }
 
 // La función 'addToDo' agregará un nuevo ToDo al array 'toDoItems'
@@ -113,9 +109,11 @@ function displayToDos() {
 
 function addToDo() {
   // Tu código acá:
-  let nuevo =  new ToDo(toDoInput);
-  toDoItems.unshift(nuevo);
-  toDoInput.value = "";
+  let descripcion = document.getElementById("toDoInput").value
+  let nuevo =  new ToDo(descripcion);
+  toDoItems.push(nuevo);
+  let input = document.getElementById("toDoInput");
+  input.value = "";
   displayToDos();
 }
 
@@ -144,10 +142,8 @@ function completeToDo(event) {
   // DESCOMENTAR LA SIGUIENTE LINEA
   const index = event.target.id;
   // Tu código acá:
-  completeToDo(event);
+  toDoItems[index].completeToDo();
   displayToDos();
-
-
 }
 
 // Una vez que llegaste a este punto verificá que todos los tests pasen
