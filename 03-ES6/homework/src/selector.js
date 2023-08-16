@@ -1,4 +1,5 @@
 var traverseDomAndCollectElements = function (matchFunc, startEl) {
+
   var resultSet = [];
 
   if (typeof startEl === "undefined") {
@@ -9,6 +10,19 @@ var traverseDomAndCollectElements = function (matchFunc, startEl) {
   // usa matchFunc para identificar elementos que matchien
 
   // TU CÓDIGO AQUÍ
+
+  function traverse(element) {
+    if (matchFunctionMaker(element)) {
+      resultSet.push(element);
+    }
+
+    for (let i = 0; i < element.children.length; i++) {
+      traverse(element.children[i]);
+    }
+  }
+
+  traverse(startEl);
+  return resultSet;
 };
 
 // Detecta y devuelve el tipo de selector
@@ -16,7 +30,13 @@ var traverseDomAndCollectElements = function (matchFunc, startEl) {
 
 var selectorTypeMatcher = function (selector) {
   // tu código aquí
-};
+  if (selector[0] === "#") return "id";
+  if (selector[0] === ".") return "class";
+  if (selector.includes(".")) {
+    return "tag.class";
+  } else
+    return "tag"
+}
 
 // NOTA SOBRE LA FUNCIÓN MATCH
 // recuerda, la función matchFunction devuelta toma un elemento como un
