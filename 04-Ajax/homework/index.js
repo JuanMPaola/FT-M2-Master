@@ -1,7 +1,7 @@
-
-let ul = document.getElementById('lista');
-
 let getAmigos = function() {
+    let ul = document.getElementById('lista');
+    let lista =$('#lista');
+    lista.empty();
     $.ajax({
         type: "GET",
         url: "http://localhost:5000/amigos",
@@ -16,25 +16,38 @@ let getAmigos = function() {
     });
 };
 
+let searchAmigos = function (){
+    let valor = $("#input").val();
+    if(valor){
+     $.get("http://localhost:5000/amigos/" + valor, (data) =>{
+     $("#amigo").text(data.name)})
+    }else{
+      console.log("Inserte un valor");
+    }
+
+}
+
+let deleteAmigo = function() {
+    let valor = $("#inputDelete").val();
+    if(valor){
+
+        $.ajax({
+            type: "DELETE",
+            url: "http://localhost:5000/amigos/"+ valor,
+            success: (amigos) => {
+                console.log(amigos)
+                $("#success").text("Amigo eliminado")
+                getAmigos();
+            }
+        });
+    }else{
+        $('#success').html("Inserta un valor");
+    }
+}
+
+
+$("#delete").on("click", deleteAmigo);
+
 $("#boton").on("click", getAmigos);
 
-
-$("#search").on("click", ()=>{
-    let valor = $("#input").val();
-    $.get("http://localhost:5000/amigos/" + valor, (data) =>{
-        $("#amigo").text(data.name)
-    })
-})
-
-$("#delete").on("click", ()=>{
-    let valor = $("#inputDelete").val();
-    $.ajax({
-        type: "DELETE",
-        url: "http://localhost:5000/amigos/"+ valor,
-        success: (amigos) => {
-            console.log(amigos)
-            $("#success").text("Amigo eliminado")
-        }
-    });
-})
-
+$("#search").on("click", searchAmigos);
