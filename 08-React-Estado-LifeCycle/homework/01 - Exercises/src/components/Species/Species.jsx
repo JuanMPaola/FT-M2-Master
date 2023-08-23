@@ -3,5 +3,12 @@ import React from "react";
 
 export default function Species({ species, handleSpecies, handleAllSpecies }) {
   // console.log(species);
-  return <div></div>
+  return <div>
+      {animals.map((especie, index) => (
+      <div key={index}>
+        <h2>{Species}</h2>
+        <button> {especie} </button>
+      </div>
+    ))}
+  </div>
 }
