@@ -9,7 +9,18 @@ const initialState = {
 // ¿Qué tiene que hacer el reducer con el contador de cada caso?
 
 function contador(state = initialState, action) {
-  
+  switch (action.type){
+    case(INCREMENTO):
+    return state= {...state, contador: state.contador+1}
+
+    case(DECREMENTO):
+    return state= {...state, contador: state.contador-1}
+
+    default:
+      return {...state}
+  }
+  //if( action.type === INCREMENTO)return state= {...state, contador: state.contador+1}
+  //if( action.type === DECREMENTO)return state= {...state, contador: state.contador+1}
 }
 
 module.exports = contador;
